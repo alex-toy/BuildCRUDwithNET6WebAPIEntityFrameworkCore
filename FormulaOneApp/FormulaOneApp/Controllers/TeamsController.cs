@@ -41,6 +41,18 @@ public class TeamsController : ControllerBase
         return CreatedAtAction("Get", team.Id, team);
     }
 
+    [HttpPost("AddPilot/{teamId}")]
+    public async Task<IActionResult> AddPilot(int teamId, [FromBody] Pilot pilot)
+    {
+        List<Team> teams = await _appContext.Teams.ToListAsync();
+        Team? team = teams.FirstOrDefault(t => t.Id == teamId);
+
+        await _appContext.Pilots.AddAsync(pilot);
+        team.Pilots.Add(pilot);
+        await _appContext.SaveChangesAsync();
+        return Ok(team);
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] Team team)
     {

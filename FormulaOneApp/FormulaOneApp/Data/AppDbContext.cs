@@ -12,5 +12,15 @@ namespace FormulaOneApp.Data
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Team>().HasMany(team => team.Pilots);
+        }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Pilot>().HasOne(e => e.Team);
+        //}
     }
 }
